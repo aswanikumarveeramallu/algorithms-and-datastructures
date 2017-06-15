@@ -18,7 +18,7 @@ public class SelectionSortTest {
 		final Integer[] input = new Integer[] { 5, 3, 6, 0, 9 };
 		selection.sort(input);
 		assertEquals(new Integer(9), input[input.length-1]);//Expect as last element
-		assertEquals(new Integer(0), input[0]);//Expect as last element
+		assertEquals(new Integer(0), input[0]);//Expect as first element
 
 	}
 
