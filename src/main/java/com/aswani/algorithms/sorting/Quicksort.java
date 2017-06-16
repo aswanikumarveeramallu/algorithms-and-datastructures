@@ -3,39 +3,32 @@ package com.aswani.algorithms.sorting;
 public class Quicksort {
 
 	public void sort(int[] a) {
-		sort(a, 0, a.length - 1);
+		sort(a, 0, a.length-1);
 	}
 
-	private static void sort(int[] a, int lo, int hi) {
-		if (hi <= lo)
-			return;
-		int j = partition(a, lo, hi);
-		sort(a, lo, j - 1);
-		sort(a, j + 1, hi);
-	}
-
-	private static int partition(int[] a, int lo, int hi) {
-		int i = lo;
-		int j = hi + 1;
-		int v = a[lo];
-		while (true) {
-			while (a[++i] > v)
-				if (i == hi)
-					break;
-			while (a[--j] > v)
-				if (j == lo)
-					break;
-			if (i >= j)
-				break;
-			exch(a, i, j);
+	private void sort(int[] a, int start, int end) {
+		if (start < end) {
+			int pIndex = partition(a, start, end);
+			sort(a, start, pIndex - 1);
+			sort(a, pIndex + 1, end);
 		}
-		exch(a, lo, j);
-		return j;
 	}
 
-	private static void exch(int[] a, int i, int j) {
-		int swap = a[i];
-		a[i] = a[j];
-		a[j] = swap;
+	private int partition(int[] a, int start, int end) {
+		int pIndex = start;
+		int pivot = a[end];
+		for (int i = start; i < end ; i++) {
+			if (a[i] <= pivot) {
+				int swap = a[i];
+				a[i] = a[pIndex];
+				a[pIndex] = swap;
+				pIndex = pIndex + 1;
+			}
+		}
+		int temp = a[pIndex];
+		a[pIndex] = a[end];
+		a[end] = temp;
+		return pIndex;
+
 	}
 }

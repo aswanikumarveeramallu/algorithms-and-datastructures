@@ -1,58 +1,51 @@
 package com.aswani.algorithms.sorting;
 
+
 public class Merge {
 
 	public void sort(int[] a) {
-		int low, high, mid;
-		low = 0;
-		high = a.length - 1;
-		mid = low + high / 2;
-		sort(a, low, mid);
-		sort(a, mid + 1, high);
-		merge(a, low, mid, high);
-	}
-
-	public void sort(int[] a, int l, int r) {
-		if (l < r) {
-			int m = (l + r) / 2;
-			sort(a, l, m);
-			sort(a, m + 1, r);
-			merge(a, l, m, r);
+		int n = a.length;
+		if (n < 2)
+			return;
+		int mid = n / 2;
+		int la[] = new int[mid];
+		int ra[] = new int[n - mid];
+		for (int i = 0; i <= mid - 1; i++) {
+			la[i] = a[i];
 		}
 
+		for (int i = mid; i <= n - 1; i++) {
+			ra[i - mid] = a[i];
+		}
+		sort(la);
+		sort(ra);
+		merge(la, ra, a);
+
 	}
 
-	public void merge(int[] a, int l, int m, int r) {
-		int n1 = m - l + 1;
-		int n2 = r - m;
-		int L[] = new int[n1];
-		int R[] = new int[n2];
-		for (int i = 0; i < n1; ++i)
-			L[i] = a[l + i];
-		for (int j = 0; j < n2; ++j)
-			R[j] = a[m + 1 + j];
-		int i = 0, j = 0;
-		int k = l;
-		while (i < n1 && j < n2) {
-			if (L[i] <= R[j]) {
-				a[k] = L[i];
-				i++;
+	public void merge(int[] la, int[] ra, int[] a) {
+		int nl = la.length;
+		int nr = ra.length;
+		int i = 0, j = 0, k = 0;
+		while (i < nl && j < nr) {
+			if (la[i] <= ra[j]) {
+				a[k] = la[i];
+				i = i + 1;
 			} else {
-				a[k] = R[j];
-				j++;
+				a[k] = ra[j];
+				j = j + 1;
 			}
-			k++;
+			k = k + 1;
 		}
-		while (i < n1) {
-			a[k] = L[i];
-			i++;
-			k++;
+		while (i < nl) {
+			a[k] = la[i];
+			i = i + 1;
+			k = k + 1;
 		}
-
-		while (j < n2) {
-			a[k] = R[j];
-			j++;
-			k++;
+		while (j < nr) {
+			a[k] = ra[j];
+			j = j + 1;
+			k = k + 1;
 		}
 	}
 
